@@ -1,7 +1,9 @@
-package com.example.nextagram_android;
+package org.nhnnext.nextagram_android;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import com.example.nextagram_android.R;
 
 import android.os.Bundle;
 import android.app.Activity;

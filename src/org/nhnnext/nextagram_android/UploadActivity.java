@@ -1,4 +1,6 @@
-package com.example.nextagram_android;
+package org.nhnnext.nextagram_android;
+
+import com.example.nextagram_android.R;
 
 import android.os.Bundle;
 import android.app.Activity;

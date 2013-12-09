@@ -1,6 +1,8 @@
-package com.example.nextagram_android;
+package org.nhnnext.nextagram_android;
 
 import java.util.ArrayList;
+
+import com.example.nextagram_android.R;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -73,7 +75,7 @@ public class TimelineActivity extends Activity {
 		ListData list3 = new ListData("cont3", "1.png");
 		dataList.add(list3);
 		
-		tlList.setAdapter(new com.example.nextagram_android.ListAdapter(this, R.layout.listdata_row, dataList));
+		tlList.setAdapter(new org.nhnnext.nextagram_android.ListAdapter(this, R.layout.listdata_row, dataList));
 		
 		tlList.setOnItemClickListener(new OnItemClickListener() {
 

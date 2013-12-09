@@ -1,4 +1,4 @@
-package com.example.nextagram_android;
+package org.nhnnext.nextagram_android;
 
 import java.util.List;
 
