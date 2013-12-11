@@ -35,7 +35,7 @@
             android:label="@string/title_activity_join" >
         </activity>
         <activity
-            android:name="org.nhnnext.nextagram_android.ContentActivity"
+            android:name="org.nhnnext.nextagram_android.ContentWrapperActivity"
             android:label="@string/title_activity_content" >
         </activity>
     </application>

@@ -37,20 +37,20 @@ public final class R {
         public static final int Button_ok=0x7f080008;
         public static final int Button_upload=0x7f080009;
         public static final int RelativeLayout1=0x7f08000b;
-        public static final int action_settings=0x7f080017;
-        public static final int button1=0x7f08000e;
-        public static final int button2=0x7f080013;
-        public static final int button3=0x7f080012;
-        public static final int button4=0x7f080011;
-        public static final int button5=0x7f080014;
-        public static final int button6=0x7f080010;
-        public static final int button7=0x7f08000f;
-        public static final int button8=0x7f080015;
-        public static final int button9=0x7f080016;
+        public static final int action_settings=0x7f080019;
+        public static final int button1=0x7f080010;
+        public static final int button2=0x7f080015;
+        public static final int button3=0x7f080014;
+        public static final int button4=0x7f080013;
+        public static final int button5=0x7f080016;
+        public static final int button6=0x7f080012;
+        public static final int button7=0x7f080011;
+        public static final int button8=0x7f080017;
+        public static final int button9=0x7f080018;
         public static final int editText1=0x7f08000c;
         public static final int editText_ID=0x7f080006;
         public static final int editText_PW=0x7f080007;
-        public static final int imageView1=0x7f08000d;
+        public static final int image=0x7f08000d;
         public static final int imageView2=0x7f080001;
         public static final int imageView3=0x7f080002;
         public static final int imageView_upload=0x7f080003;
@@ -58,9 +58,11 @@ public final class R {
         public static final int listView_timeline=0x7f08000a;
         public static final int textView1=0x7f080000;
         public static final int textView2=0x7f080004;
+        public static final int tvCommentNum=0x7f08000f;
+        public static final int tvContent=0x7f08000e;
     }
     public static final class layout {
-        public static final int activity_content=0x7f030000;
+        public static final int activity_contentwrapper=0x7f030000;
         public static final int activity_join=0x7f030001;
         public static final int activity_main=0x7f030002;
         public static final int activity_timeline=0x7f030003;

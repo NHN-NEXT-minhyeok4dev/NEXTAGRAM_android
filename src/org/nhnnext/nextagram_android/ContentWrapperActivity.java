@@ -11,14 +11,14 @@ import android.view.Menu;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-public class ContentActivity extends Activity {
+public class ContentWrapperActivity extends Activity {
 
 	private ListView commentsList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_content);
+		setContentView(R.layout.activity_contentwrapper);
 		
 		commentsList = (ListView)findViewById(R.id.listView_comments);
 		ArrayList<HashMap<String, String>> stringList = new ArrayList<HashMap<String, String>>();
