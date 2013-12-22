@@ -193,11 +193,12 @@ public class Dao {
 		while (cursor.moveToNext()) {
 			try {
 				id = cursor.getInt(0);
-
+				
+				Log.i("test", "test " + id + " , " + targetid);
 				if (id == targetid) {
-					return dataList.get(targetid);
+					return dataList.get(targetid-1);
 				}
-			} catch (Exception e) {
+			} catch (Exception e) {				
 				Log.i("test", "getdatabyid err - " + e.getMessage());
 			}
 		}

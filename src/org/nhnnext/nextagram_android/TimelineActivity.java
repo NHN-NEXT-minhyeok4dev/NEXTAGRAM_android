@@ -48,7 +48,6 @@ public class TimelineActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent(getApplicationContext(),
 						UploadActivity.class);
-//				startActivity(intent);
 				startActivityForResult(intent, REQUEST_UPLOAD_FINISHED );
 			}
 		});
@@ -87,6 +86,8 @@ public class TimelineActivity extends Activity {
 					int position, long id) {
 				Intent intent = new Intent(getBaseContext(),
 						ContentWrapperActivity.class);
+				intent.putExtra("ID", (position+1)+"");
+				Log.i("test", position + "- " + id);
 				startActivity(intent);
 			}
 		});
