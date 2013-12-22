@@ -3,7 +3,7 @@
     android:layout_height="fill_parent" >
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/camerabtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -25,7 +25,7 @@
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
+        android:layout_below="@+id/camerabtn"
         android:layout_marginLeft="76dp"
         android:layout_toRightOf="@+id/button3"
         android:text="로그아웃" />
@@ -34,10 +34,10 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
+        android:layout_alignBaseline="@+id/camerabtn"
+        android:layout_alignBottom="@+id/camerabtn"
         android:layout_marginLeft="44dp"
-        android:layout_toRightOf="@+id/button1"
+        android:layout_toRightOf="@+id/camerabtn"
         android:text="회원가입" />
 
     <Button

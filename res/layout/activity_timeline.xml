@@ -10,7 +10,7 @@
         android:background="#10000000" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/tv_contents_wrapper"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_weight="1.00"
@@ -18,6 +18,13 @@
             android:gravity="center"
             android:text="NEXTAGRAM"
             android:textSize="30dp" />
+
+        <ImageView
+            android:id="@+id/Button_refresh"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:background="#20000000"
+            android:src="@drawable/refresh" />
 
         <ImageView
             android:id="@+id/Button_upload"

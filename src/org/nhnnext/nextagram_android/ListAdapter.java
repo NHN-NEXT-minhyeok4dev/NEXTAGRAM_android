@@ -1,5 +1,6 @@
 package org.nhnnext.nextagram_android;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import com.example.nextagram_android.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,15 +49,23 @@ public class ListAdapter extends ArrayAdapter<ListData>{
 		content.setText(listData.get(position).getContents());
 		commNum.setText(String.valueOf(listData.get(position).getCommentNum()));
 		
-		InputStream is;
-		try {
-			is = context.getAssets().open(listData.get(position).getImgName());
-			Drawable d = Drawable.createFromStream(is, null);
-			img.setImageDrawable(d);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
+		// asset에 있는 사진 불러오기
+//		InputStream is;
+//		try {
+//			is = context.getAssets().open(listData.get(position).getImgName());
+//			Drawable d = Drawable.createFromStream(is, null);
+//			img.setImageDrawable(d);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		
+		String img_path = context.getFilesDir().getPath() + "/" + listData.get(position).getImgName();
+		File img_load_path = new File(img_path);
+		if(img_load_path.exists()){
+			Bitmap bitmap = BitmapFactory.decodeFile(img_path);
+			img.setImageBitmap(bitmap);
+		}
 		return row;
 	}
 }

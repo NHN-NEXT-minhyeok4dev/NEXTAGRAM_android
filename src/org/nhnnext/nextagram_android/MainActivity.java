@@ -19,7 +19,6 @@ public class MainActivity extends Activity{
 		
 		okBtn = (ImageView)findViewById(R.id.Button_ok);
 		okBtn.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				Intent okIntent = new Intent(getApplicationContext(), TimelineActivity.class);
