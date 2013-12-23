@@ -1,8 +1,5 @@
 package org.nhnnext.nextagram_android;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import com.example.nextagram_android.R;
 
@@ -20,10 +17,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -100,7 +95,7 @@ public class UploadActivity extends Activity implements OnClickListener{
 						}
 					});
 					
-					ListData tlData = new ListData(ID, content.getText().toString(), fileName, 0);
+					ListData tlData = new ListData(1, ID, content.getText().toString(), fileName);
 			
 					ProxyUP proxyUP = new ProxyUP();
 					proxyUP.uploadArticle(tlData, filePath);

@@ -14,6 +14,7 @@ import android.util.Log;
 public class Dao {
 	private Context context;
 	SQLiteDatabase db;
+	
 
 	public Dao(Context context) {
 		this.context = context;
@@ -21,10 +22,9 @@ public class Dao {
 				SQLiteDatabase.CREATE_IF_NECESSARY, null);
 		try {
 			String sql = "CREATE TABLE IF NOT EXISTS UserContent("
-					+ "ID integer primary key autoincrement,"
+					+ "ID integer primary key,"
 					+ "Owner text not null," + "Contents text not null,"
-					+ "ImgName text not null,"
-					+ "CommentNum integer not null);";
+					+ "ImgName text not null);";
 			db.execSQL(sql);
 		} catch (Exception e) {
 			Log.i("test", "create table err - " + e.getMessage());
@@ -35,7 +35,6 @@ public class Dao {
 		String owner;
 		String contents;
 		String imgName;
-		int commentNum;
 
 		JSONArray jArr;
 		FileDownloader fileDownloader = new FileDownloader(context);
@@ -43,24 +42,23 @@ public class Dao {
 			jArr = new JSONArray(jsonData);
 			if (getLength() != 0) {
 				JSONObject jObj = jArr.getJSONObject(jArr.length() - 1);
-				
+				int id = jObj.getInt("ID");
 				owner = jObj.getString("Owner");
 				contents = jObj.getString("Contents");
 				imgName = jObj.getString("ImgName");
-				commentNum = Integer.parseInt(jObj.getString("CommentNum"));
 
-				Log.i("test", "Owner : " + owner + " Contents : "
-						+ contents);
-
-				String sql = "INSERT INTO UserContent(Owner, Contents, ImgName, CommentNum)"
-						+ " VALUES('"
+				String sql = "INSERT INTO UserContent"
+						+ " VALUES("
+						+ id
+						+", '"
 						+ owner
 						+ "', '"
 						+ contents
 						+ "', '"
-						+ imgName + "', '" + commentNum + "'" + ");";
+						+ imgName + "');";
 				try {
 					db.execSQL(sql);
+					
 				} catch (Exception e) {
 					Log.i("test", "SQL INSERT ERROR ! " + e);
 				}
@@ -75,22 +73,20 @@ public class Dao {
 			} else {
 				for (int i = 0; i < jArr.length(); i++) {
 					JSONObject jObj = jArr.getJSONObject(i);
-
+					int id = jObj.getInt("ID");
 					owner = jObj.getString("Owner");
 					contents = jObj.getString("Contents");
 					imgName = jObj.getString("ImgName");
-					commentNum = Integer.parseInt(jObj.getString("CommentNum"));
 
-					Log.i("test", "Owner : " + owner + " Contents : "
-							+ contents);
-
-					String sql = "INSERT INTO UserContent(Owner, Contents, ImgName, CommentNum)"
-							+ " VALUES('"
+					String sql = "INSERT INTO UserContent"
+							+ " VALUES("
+							+ id
+							+", '"
 							+ owner
 							+ "', '"
 							+ contents
 							+ "', '"
-							+ imgName + "', '" + commentNum + "'" + ");";
+							+ imgName + "');";
 					try {
 						db.execSQL(sql);
 					} catch (Exception e) {
@@ -113,54 +109,22 @@ public class Dao {
 		}
 	}
 
-	public String getJsonTestData() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("");
-
-		sb.append("[");
-
-		sb.append("	 {");
-		sb.append("	    'Owner':'owner1',");
-		sb.append("	    'Contents':'cont1',");
-		sb.append("	    'ImgName':'jinhee.png',");
-		sb.append("	    'CommentNum':'0'");
-		sb.append("	 },");
-		sb.append("	 {");
-		sb.append("	    'Owner':'owner2',");
-		sb.append("	    'Contents':'cont2',");
-		sb.append("	    'ImgName':'jinhee.png',");
-		sb.append("	    'CommentNum':'1'");
-		sb.append("	 },");
-		sb.append("	 {");
-		sb.append("	    'Owner':'owner3',");
-		sb.append("	    'Contents':'cont3',");
-		sb.append("	    'ImgName':'jinhee.png',");
-		sb.append("	    'CommentNum':'2'");
-		sb.append("	 }");
-
-		sb.append("]");
-
-		return sb.toString();
-	}
-
 	public ArrayList<ListData> getDataList() {
 		ArrayList<ListData> dataList = new ArrayList<ListData>();
 		String owner;
 		String contents;
 		String imgName;
-		int commentNum;
-
+		int id;
 		String sql = "SELECT * FROM UserContent;";
 		Cursor cursor = db.rawQuery(sql, null);
 
 		while (cursor.moveToNext()) {
 			try {
+				id = cursor.getInt(0);
 				owner = cursor.getString(1);
 				contents = cursor.getString(2);
 				imgName = cursor.getString(3);
-				commentNum = cursor.getInt(4);
-				dataList.add(new ListData(owner, contents, imgName, commentNum));
+				dataList.add(new ListData(id, owner, contents, imgName));
 			} catch (Exception e) {
 				Log.i("test", "getdatalist err - " + e.getMessage());
 			}
@@ -186,26 +150,33 @@ public class Dao {
 	public ListData getDataByID(int targetid) {
 		ArrayList<ListData> dataList = getDataList();
 		int id;
+		int cnt=0;
 
 		String sql = "SELECT * FROM UserContent;";
 		Cursor cursor = db.rawQuery(sql, null);
 
 		while (cursor.moveToNext()) {
 			try {
-				id = cursor.getInt(0);
 				
-				Log.i("test", "test " + id + " , " + targetid);
+				id = cursor.getInt(0);
 				if (id == targetid) {
-					return dataList.get(targetid-1);
+					return dataList.get(cnt);
 				}
 			} catch (Exception e) {				
 				Log.i("test", "getdatabyid err - " + e.getMessage());
 			}
+			cnt++;
 		}
 		cursor.close();
 
 		Log.i("test", "getdatabyid err : not have contents");
 		return null;
+	}
+	
+	public void deleteDataByID(int targetid){
+		String sql = "DELETE FROM UserContent WHERE ID = " + targetid;
+		
+		db.execSQL(sql);	
 	}
 
 }

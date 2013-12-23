@@ -4,13 +4,10 @@ import java.util.ArrayList;
 
 import com.example.nextagram_android.R;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,10 +19,10 @@ import android.widget.ListView;
 public class TimelineActivity extends Activity {
 
 	protected static final int REQUEST_UPLOAD_FINISHED = 100;
+	protected static final int REQUEST_DELETE_FINISHED = 101;
 	private ImageView uploadBtn;
 	private ListView tlList;
 	private ArrayList<ListData> dataList;
-	private ImageView refreshBtn;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,21 +48,13 @@ public class TimelineActivity extends Activity {
 				startActivityForResult(intent, REQUEST_UPLOAD_FINISHED );
 			}
 		});
-		refreshBtn = (ImageView)findViewById(R.id.Button_refresh);
-		refreshBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				setUpTimelineList();
-				Log.i("test","refreshed");
-			}
-		});
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		try{
-			if(requestCode == REQUEST_UPLOAD_FINISHED){
+			if(requestCode == REQUEST_UPLOAD_FINISHED || requestCode == REQUEST_DELETE_FINISHED){
 				setUpTimelineList();
 			}
 			}catch(Exception e){
@@ -86,8 +75,7 @@ public class TimelineActivity extends Activity {
 					int position, long id) {
 				Intent intent = new Intent(getBaseContext(),
 						ContentWrapperActivity.class);
-				intent.putExtra("ID", (position+1)+"");
-				Log.i("test", position + "- " + id);
+				intent.putExtra("ID", dataList.get(position).getId()+"");
 				startActivity(intent);
 			}
 		});
@@ -116,11 +104,10 @@ public class TimelineActivity extends Activity {
 		}.start();
 	}
 	
-//	@Override
-//	protected void onResume() {
-//		super.onResume();
-//		refreshData();
-//		Log.i("test", "resume refresh");
-//	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		setUpTimelineList();
+	}
 
 }

@@ -1,17 +1,20 @@
 package org.nhnnext.nextagram_android;
 
 public class ListData {
+	private int id;
 	private String owner;
 	private String contents;
 	private String imgName;
-	private int commentNum;
 
-	public ListData(String owner, String contents, String imgName,
-			int commentNum) {
+	public ListData(int id, String owner, String contents, String imgName) {
+		this.id = id;
 		this.owner = owner;
 		this.contents = contents;
 		this.imgName = imgName;
-		this.commentNum = commentNum;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public String getOwner() {
@@ -24,10 +27,6 @@ public class ListData {
 
 	public String getImgName() {
 		return imgName;
-	}
-
-	public int getCommentNum() {
-		return commentNum;
 	}
 
 }

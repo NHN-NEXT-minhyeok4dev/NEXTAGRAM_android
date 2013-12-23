@@ -1,8 +1,6 @@
 package org.nhnnext.nextagram_android;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.example.nextagram_android.R;
 
@@ -10,30 +8,31 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-public class ContentWrapperActivity extends Activity {
+public class ContentWrapperActivity extends Activity implements OnClickListener{
 
-	private ListView commentsList;
 	private ImageView contentImage;
 	private TextView tvContents;
+	private ImageView deleteBtn;
+	private String contentNumber;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contentwrapper);
 		Dao dao = new Dao(getApplicationContext());
-		String contentNumber = getIntent().getExtras().getString("ID");
+		contentNumber = getIntent().getExtras().getString("ID");
 		ListData tlData = dao.getDataByID(Integer.parseInt(contentNumber));
 				
 		contentImage = (ImageView)findViewById(R.id.imageView_upload);
 		tvContents = (TextView)findViewById(R.id.tv_contents_wrapper);
 		tvContents.setText(tlData.getContents());
-		
+		deleteBtn = (ImageView)findViewById(R.id.detail_deleteBtn);
+		deleteBtn.setOnClickListener(this);
 		String img_path = getApplicationContext().getFilesDir().getPath() + "/" + tlData.getImgName();
 		File img_load_path = new File(img_path);
 		
@@ -43,7 +42,7 @@ public class ContentWrapperActivity extends Activity {
 		}
 		
 		
-		
+		/*
 		// comment
 		commentsList = (ListView)findViewById(R.id.listView_comments);
 		ArrayList<HashMap<String, String>> stringList = new ArrayList<HashMap<String, String>>();
@@ -60,7 +59,21 @@ public class ContentWrapperActivity extends Activity {
 		
 		SimpleAdapter sa = new SimpleAdapter(this, stringList, android.R.layout.simple_expandable_list_item_2, from, to);
 		commentsList.setAdapter(sa);
-		
+		*/
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()){
+		case R.id.detail_deleteBtn:
+			Dao dao = new Dao(getApplicationContext());
+			dao.deleteDataByID(Integer.parseInt(contentNumber));
+//			finishActivity(REQUEST_DELETE_FINISHED);
+			finish();
+			break;
+		case R.id.detail_modifyBtn:
+			break;
+		}
 	}
 
 }
