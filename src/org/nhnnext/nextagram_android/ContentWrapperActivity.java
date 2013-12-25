@@ -31,6 +31,8 @@ public class ContentWrapperActivity extends Activity implements OnClickListener{
 		contentImage = (ImageView)findViewById(R.id.imageView_upload);
 		tvContents = (TextView)findViewById(R.id.tv_contents_wrapper);
 		tvContents.setText(tlData.getContents());
+		
+		
 		deleteBtn = (ImageView)findViewById(R.id.detail_deleteBtn);
 		deleteBtn.setOnClickListener(this);
 		String img_path = getApplicationContext().getFilesDir().getPath() + "/" + tlData.getImgName();

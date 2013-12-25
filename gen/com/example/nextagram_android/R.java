@@ -37,29 +37,29 @@ public final class R {
     }
     public static final class id {
         public static final int Button_ok=0x7f080006;
-        public static final int Button_upload=0x7f080007;
-        public static final int RelativeLayout1=0x7f080009;
-        public static final int action_settings=0x7f080018;
-        public static final int button2=0x7f080014;
-        public static final int button3=0x7f080013;
-        public static final int button4=0x7f080012;
-        public static final int button5=0x7f080015;
-        public static final int button6=0x7f080011;
-        public static final int button7=0x7f080010;
-        public static final int button8=0x7f080016;
-        public static final int button9=0x7f080017;
-        public static final int camerabtn=0x7f08000f;
+        public static final int RelativeLayout1=0x7f080008;
+        public static final int action_settings=0x7f080017;
+        public static final int action_upload=0x7f080018;
+        public static final int button2=0x7f080013;
+        public static final int button3=0x7f080012;
+        public static final int button4=0x7f080011;
+        public static final int button5=0x7f080014;
+        public static final int button6=0x7f080010;
+        public static final int button7=0x7f08000f;
+        public static final int button8=0x7f080015;
+        public static final int button9=0x7f080016;
+        public static final int camerabtn=0x7f08000e;
         public static final int detail_deleteBtn=0x7f080002;
         public static final int detail_modifyBtn=0x7f080001;
         public static final int editText_ID=0x7f080004;
         public static final int editText_PW=0x7f080005;
-        public static final int et_upload=0x7f08000c;
-        public static final int image=0x7f08000d;
+        public static final int et_upload=0x7f08000b;
+        public static final int image=0x7f08000c;
         public static final int imageView_upload=0x7f080003;
-        public static final int iv_uploadmain=0x7f08000a;
-        public static final int iv_uploadokicon=0x7f08000b;
-        public static final int listView_timeline=0x7f080008;
-        public static final int tvContent=0x7f08000e;
+        public static final int iv_uploadmain=0x7f080009;
+        public static final int iv_uploadokicon=0x7f08000a;
+        public static final int listView_timeline=0x7f080007;
+        public static final int tvContent=0x7f08000d;
         public static final int tv_contents_wrapper=0x7f080000;
     }
     public static final class layout {

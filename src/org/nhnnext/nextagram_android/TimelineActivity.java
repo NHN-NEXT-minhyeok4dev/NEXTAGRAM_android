@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -32,12 +34,12 @@ public class TimelineActivity extends Activity {
 			if(dao.getLength() == 0)
 				initData();
 			setUpTimelineList();
-			setUpBtn();
+			//setUpBtn();
 		} catch (Exception e) {
 			Log.i("test", "dao err - " + e.getMessage());
 		}
 	}
-
+/*
 	private void setUpBtn() {
 		uploadBtn = (ImageView) findViewById(R.id.Button_upload);
 		uploadBtn.setOnClickListener(new OnClickListener() {
@@ -49,7 +51,7 @@ public class TimelineActivity extends Activity {
 			}
 		});
 	}
-
+*/
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -108,6 +110,25 @@ public class TimelineActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		setUpTimelineList();
+	}
+	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.timeline, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+		case R.id.action_upload:
+			Intent intent = new Intent(getApplicationContext(),
+					UploadActivity.class);
+			startActivityForResult(intent, REQUEST_UPLOAD_FINISHED );
+			break;
+		}
+		return true;
 	}
 
 }
