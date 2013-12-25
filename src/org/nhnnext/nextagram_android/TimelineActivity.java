@@ -1,7 +1,10 @@
 package org.nhnnext.nextagram_android;
 
+import com.devspark.sidenavigation.ISideNavigationCallback;
 import java.util.ArrayList;
 
+import com.devspark.sidenavigation.SideNavigationView;
+import com.devspark.sidenavigation.SideNavigationView.Mode;
 import com.example.nextagram_android.R;
 
 import android.os.Bundle;
@@ -18,13 +21,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-public class TimelineActivity extends Activity {
+public class TimelineActivity extends Activity implements ISideNavigationCallback{
 
 	protected static final int REQUEST_UPLOAD_FINISHED = 100;
 	protected static final int REQUEST_DELETE_FINISHED = 101;
 	private ImageView uploadBtn;
 	private ListView tlList;
 	private ArrayList<ListData> dataList;
+	private SideNavigationView sideNavigationView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,6 +38,7 @@ public class TimelineActivity extends Activity {
 			if(dao.getLength() == 0)
 				initData();
 			setUpTimelineList();
+			setupSideNavi();
 			//setUpBtn();
 		} catch (Exception e) {
 			Log.i("test", "dao err - " + e.getMessage());
@@ -122,6 +127,9 @@ public class TimelineActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()){
+		case android.R.id.home:
+			sideNavigationView.toggleMenu();
+			break;
 		case R.id.action_upload:
 			Intent intent = new Intent(getApplicationContext(),
 					UploadActivity.class);
@@ -129,6 +137,19 @@ public class TimelineActivity extends Activity {
 			break;
 		}
 		return true;
+	}
+	
+	public void setupSideNavi(){
+		sideNavigationView = (SideNavigationView)findViewById(R.id.side_navigation_view);
+		sideNavigationView.setMenuItems(R.menu.side_menu);
+		sideNavigationView.setMenuClickCallback(this);
+		sideNavigationView.setMode(Mode.LEFT);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+	}
+	
+	@Override
+	public void onSideNavigationItemClick(int itemId){
+		
 	}
 
 }
