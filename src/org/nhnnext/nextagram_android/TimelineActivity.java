@@ -1,10 +1,7 @@
 package org.nhnnext.nextagram_android;
 
-import com.devspark.sidenavigation.ISideNavigationCallback;
 import java.util.ArrayList;
 
-import com.devspark.sidenavigation.SideNavigationView;
-import com.devspark.sidenavigation.SideNavigationView.Mode;
 import com.example.nextagram_android.R;
 
 import android.os.Bundle;
@@ -15,20 +12,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 
-public class TimelineActivity extends Activity implements ISideNavigationCallback{
+public class TimelineActivity extends Activity{
 
 	protected static final int REQUEST_UPLOAD_FINISHED = 100;
 	protected static final int REQUEST_DELETE_FINISHED = 101;
-	private ImageView uploadBtn;
 	private ListView tlList;
 	private ArrayList<ListData> dataList;
-	private SideNavigationView sideNavigationView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,25 +32,11 @@ public class TimelineActivity extends Activity implements ISideNavigationCallbac
 			if(dao.getLength() == 0)
 				initData();
 			setUpTimelineList();
-			setupSideNavi();
-			//setUpBtn();
 		} catch (Exception e) {
 			Log.i("test", "dao err - " + e.getMessage());
 		}
 	}
-/*
-	private void setUpBtn() {
-		uploadBtn = (ImageView) findViewById(R.id.Button_upload);
-		uploadBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(),
-						UploadActivity.class);
-				startActivityForResult(intent, REQUEST_UPLOAD_FINISHED );
-			}
-		});
-	}
-*/
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -89,11 +69,6 @@ public class TimelineActivity extends Activity implements ISideNavigationCallbac
 	}
 
 	private void initData() {
-		// local json test code
-		// String testJsonData = dao.getJsonTestData();
-		// dao.insertJsonData(testJsonData);
-
-		// proxy json code with Thread
 		new Thread(){
 			private final Handler handler = new Handler();
 			public void run(){
@@ -115,8 +90,7 @@ public class TimelineActivity extends Activity implements ISideNavigationCallbac
 	protected void onResume() {
 		super.onResume();
 		setUpTimelineList();
-	}
-	
+	}	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -127,9 +101,6 @@ public class TimelineActivity extends Activity implements ISideNavigationCallbac
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()){
-		case android.R.id.home:
-			sideNavigationView.toggleMenu();
-			break;
 		case R.id.action_upload:
 			Intent intent = new Intent(getApplicationContext(),
 					UploadActivity.class);
@@ -138,18 +109,4 @@ public class TimelineActivity extends Activity implements ISideNavigationCallbac
 		}
 		return true;
 	}
-	
-	public void setupSideNavi(){
-		sideNavigationView = (SideNavigationView)findViewById(R.id.side_navigation_view);
-		sideNavigationView.setMenuItems(R.menu.side_menu);
-		sideNavigationView.setMenuClickCallback(this);
-		sideNavigationView.setMode(Mode.LEFT);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-	}
-	
-	@Override
-	public void onSideNavigationItemClick(int itemId){
-		
-	}
-
 }

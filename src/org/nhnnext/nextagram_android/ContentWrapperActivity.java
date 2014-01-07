@@ -8,17 +8,16 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ContentWrapperActivity extends Activity implements OnClickListener{
+public class ContentWrapperActivity extends Activity {
 
 	private ImageView contentImage;
-	private TextView tvContents;
-	private ImageView deleteBtn;
 	private String contentNumber;
+	private TextView detailText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +26,18 @@ public class ContentWrapperActivity extends Activity implements OnClickListener{
 		Dao dao = new Dao(getApplicationContext());
 		contentNumber = getIntent().getExtras().getString("ID");
 		ListData tlData = dao.getDataByID(Integer.parseInt(contentNumber));
-				
 		contentImage = (ImageView)findViewById(R.id.imageView_upload);
-		tvContents = (TextView)findViewById(R.id.tv_contents_wrapper);
-		tvContents.setText(tlData.getContents());
+		detailText = (TextView)findViewById(R.id.detail_text);
+				
 		
 		
-		deleteBtn = (ImageView)findViewById(R.id.detail_deleteBtn);
-		deleteBtn.setOnClickListener(this);
+		setTitle(tlData.getContents());
+		detailText.setText("\nID : " + tlData.getId() +
+				"\nOwner : " + tlData.getOwner() +
+				"\nContents : " + tlData.getContents() +
+				"\nImgName : " + tlData.getImgName());
+		
+		
 		String img_path = getApplicationContext().getFilesDir().getPath() + "/" + tlData.getImgName();
 		File img_load_path = new File(img_path);
 		
@@ -43,39 +46,23 @@ public class ContentWrapperActivity extends Activity implements OnClickListener{
 			contentImage.setImageBitmap(bitmap);
 		}
 		
-		
-		/*
-		// comment
-		commentsList = (ListView)findViewById(R.id.listView_comments);
-		ArrayList<HashMap<String, String>> stringList = new ArrayList<HashMap<String, String>>();
-		
-		for(int i=0;i<5;i++){
-			HashMap<String, String> commMap = new HashMap<String, String>();
-			commMap.put("id", "ID");
-			commMap.put("comment", "wow!");	
-			stringList.add(commMap);
-		}
-		
-		String[] from = {"id", "comment"};
-		int[] to = {android.R.id.text1, android.R.id.text2};
-		
-		SimpleAdapter sa = new SimpleAdapter(this, stringList, android.R.layout.simple_expandable_list_item_2, from, to);
-		commentsList.setAdapter(sa);
-		*/
 	}
-
 	@Override
-	public void onClick(View v) {
-		switch(v.getId()){
-		case R.id.detail_deleteBtn:
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.content, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+		case R.id.action_delete:
 			Dao dao = new Dao(getApplicationContext());
 			dao.deleteDataByID(Integer.parseInt(contentNumber));
-//			finishActivity(REQUEST_DELETE_FINISHED);
 			finish();
 			break;
-		case R.id.detail_modifyBtn:
-			break;
 		}
+		return true;
 	}
 
 }
