@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -28,9 +29,7 @@ public class TimelineActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
 		
-		Dao dao = new Dao(getApplicationContext());
-		if(dao.getLength() == 0)
-			initData();
+		initData();
 		setUpTimelineList();
 	}
 
@@ -102,6 +101,11 @@ public class TimelineActivity extends Activity{
 			Intent intent = new Intent(getApplicationContext(),
 					UploadActivity.class);
 			startActivityForResult(intent, REQUEST_UPLOAD_FINISHED );
+			break;
+		case R.id.action_refresh:
+			Toast.makeText(getApplicationContext(), "refreshed", Toast.LENGTH_SHORT).show();
+			
+			initData();
 			break;
 		}
 		return true;

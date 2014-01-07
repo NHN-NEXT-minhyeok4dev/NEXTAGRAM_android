@@ -25,8 +25,7 @@ public class ProxyUP {
 			
 			FileInputStream fis = new FileInputStream(filePath);
 			
-			URL url = new URL("http://10.73.44.93/~stu06/upload.php");
-			
+			URL url = new URL("http://10.73.43.110:8080/timeline/asd/uploadOK");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			
 			conn.setRequestProperty("Accept-Charset", "UTF-8");
@@ -48,13 +47,13 @@ public class ProxyUP {
 			DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 			
 			
-			dos.write( getPostData("Owner",data.getOwner()).getBytes("UTF-8") );
-			dos.write( getPostData("Contents",data.getContents()).getBytes("UTF-8") );
-			dos.write( getPostData("ImgName",data.getImgName()).getBytes("UTF-8") );
+			dos.write( getPostData("owner",data.getOwner()).getBytes("UTF-8") );
+			dos.write( getPostData("contents",data.getContents()).getBytes("UTF-8") );
+			dos.write( getPostData("fileName",data.getImgName()).getBytes("UTF-8") );
 		    
 		    
 			dos.writeBytes(twoHyphens + boundary + lineEnd);
-			dos.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\"" + data.getImgName() + "\"" + lineEnd);
+			dos.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\"" + data.getImgName() + "\"" + lineEnd);
 			dos.writeBytes(lineEnd);
 
 

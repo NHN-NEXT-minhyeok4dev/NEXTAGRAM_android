@@ -1,5 +1,7 @@
 package org.nhnnext.nextagram_android;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -14,7 +16,6 @@ import android.util.Log;
 public class Dao {
 	private Context context;
 	SQLiteDatabase db;
-	
 
 	public Dao(Context context) {
 		this.context = context;
@@ -22,9 +23,8 @@ public class Dao {
 				SQLiteDatabase.CREATE_IF_NECESSARY, null);
 		try {
 			String sql = "CREATE TABLE IF NOT EXISTS UserContent("
-					+ "ID integer primary key,"
-					+ "Owner text not null," + "Contents text not null,"
-					+ "ImgName text not null);";
+					+ "ID integer primary key," + "Owner text not null,"
+					+ "Contents text not null," + "ImgName text not null);";
 			db.execSQL(sql);
 		} catch (Exception e) {
 			Log.i("test", "Class Dao : create table err - " + e.getMessage());
@@ -35,75 +35,35 @@ public class Dao {
 		String owner;
 		String contents;
 		String imgName;
-
 		JSONArray jArr;
 		FileDownloader fileDownloader = new FileDownloader(context);
+
 		try {
+			deleteAllData();
 			jArr = new JSONArray(jsonData);
-			if (getLength() != 0) {
-				JSONObject jObj = jArr.getJSONObject(jArr.length() - 1);
-				/*
-				int id = jObj.getInt("ID");
-				owner = jObj.getString("Owner");
-				contents = jObj.getString("Contents");
-				imgName = jObj.getString("ImgName");
-*/
+
+			for (int i = getLength(); i < jArr.length(); i++) {
+				JSONObject jObj = jArr.getJSONObject(i);
 				int id = jObj.getInt("id");
 				owner = jObj.getString("owner");
 				contents = jObj.getString("contents");
 				imgName = jObj.getString("fileName");
-				String sql = "INSERT INTO UserContent"
-						+ " VALUES("
-						+ id
-						+", '"
-						+ owner
-						+ "', '"
-						+ contents
-						+ "', '"
-						+ imgName + "');";
+
+				String sql = "INSERT INTO UserContent" + " VALUES(" + id
+						+ ", '" + owner + "', '" + contents + "', '" + imgName
+						+ "');";
 				try {
 					db.execSQL(sql);
-					
 				} catch (Exception e) {
 					Log.i("test", "Class Dao - SQL INSERT ERROR ! " + e);
 				}
 				try {
-//					fileDownloader.downFile("http://10.73.44.93/~stu06/image/" + imgName, imgName);
-					fileDownloader.downFile("http://10.73.43.110:8080/images/" + imgName, imgName);
-					
+					fileDownloader.downFile("http://10.73.43.110:8080/images/"
+							+ imgName, imgName);
 				} catch (Exception e) {
 					Log.i("test", "file downloader.downfile err! " + e);
 				}
-			} else {
-				for (int i = 0; i < jArr.length(); i++) {
-					JSONObject jObj = jArr.getJSONObject(i);
-					int id = jObj.getInt("id");
-					owner = jObj.getString("owner");
-					contents = jObj.getString("contents");
-					imgName = jObj.getString("fileName");
 
-					String sql = "INSERT INTO UserContent"
-							+ " VALUES("
-							+ id
-							+", '"
-							+ owner
-							+ "', '"
-							+ contents
-							+ "', '"
-							+ imgName + "');";
-					try {
-						db.execSQL(sql);
-					} catch (Exception e) {
-						Log.i("test", "Class Dao - SQL INSERT ERROR ! " + e);
-					}
-					try {
-//						fileDownloader.downFile("http://10.73.44.93/~stu06/image/" + imgName,imgName);
-						fileDownloader.downFile("http://10.73.43.110:8080/images/" + imgName, imgName);
-					} catch (Exception e) {
-						Log.i("test", "file downloader.downfile err! " + e);
-					}
-
-				}
 			}
 		} catch (JSONException e) {
 			Log.i("test", "Class Dao - JSON ERROR - " + e.getMessage());
@@ -141,9 +101,8 @@ public class Dao {
 		try {
 			String sql = "SELECT * FROM UserContent;";
 			Cursor cursor = db.rawQuery(sql, null);
-			cursor.moveToLast();
 
-			return cursor.getInt(0);
+			return cursor.getCount();
 		} catch (Exception e) {
 			Log.i("test", "Class Dao : getLength() err -  " + e.getMessage());
 			return 0;
@@ -153,19 +112,19 @@ public class Dao {
 	public ListData getDataByID(int targetid) {
 		ArrayList<ListData> dataList = getDataList();
 		int id;
-		int cnt=0;
+		int cnt = 0;
 
 		String sql = "SELECT * FROM UserContent;";
 		Cursor cursor = db.rawQuery(sql, null);
 
 		while (cursor.moveToNext()) {
 			try {
-				
+
 				id = cursor.getInt(0);
 				if (id == targetid) {
 					return dataList.get(cnt);
 				}
-			} catch (Exception e) {				
+			} catch (Exception e) {
 				Log.i("test", "Class Dao : getdatabyid err - " + e.getMessage());
 			}
 			cnt++;
@@ -175,11 +134,33 @@ public class Dao {
 		Log.i("test", "Class Dao - getdatabyid err : not have contents");
 		return null;
 	}
-	
-	public void deleteDataByID(int targetid){
+
+	public void deleteDataByID(int targetid) {
 		String sql = "DELETE FROM UserContent WHERE ID = " + targetid;
+
+		db.execSQL(sql);
 		
-		db.execSQL(sql);	
+		URL url;
+		try {
+			url = new URL("http://10.73.43.110:8080/timeline/asd/" + targetid + "/delete");
+			System.out.println(url);
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+//			
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Connection", "Keep-Alive");
+			conn.setRequestProperty("Accept", "text/html");
+			
+			conn.connect();
+			System.out.println(conn.getResponseCode());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteAllData(){
+		String sql = "DELETE FROM UserContent;";
+		db.execSQL(sql);
+		
 	}
 
 }

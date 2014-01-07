@@ -1,6 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/action_refresh"
+		android:icon="@drawable/refreshicon"
+		android:showAsAction="always"
+		android:title="refresh" />
+    <item
         android:id="@+id/action_upload"
 		android:icon="@drawable/uploadicon"
 		android:showAsAction="always"

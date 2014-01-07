@@ -3,7 +3,6 @@ package org.nhnnext.nextagram_android;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.util.Log;
 public class Proxy {
 	public String getJSON(){
 		try {
-//			URL url = new URL("http://10.73.44.93/~stu06/loadData.php");
 			URL url = new URL("http://10.73.43.110:8080/timeline/asd.json");
 			
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
