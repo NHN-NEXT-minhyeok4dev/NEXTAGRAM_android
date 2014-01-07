@@ -27,14 +27,11 @@ public class TimelineActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
-		try {
-			Dao dao = new Dao(getApplicationContext());
-			if(dao.getLength() == 0)
-				initData();
-			setUpTimelineList();
-		} catch (Exception e) {
-			Log.i("test", "dao err - " + e.getMessage());
-		}
+		
+		Dao dao = new Dao(getApplicationContext());
+		if(dao.getLength() == 0)
+			initData();
+		setUpTimelineList();
 	}
 
 	@Override
@@ -45,7 +42,7 @@ public class TimelineActivity extends Activity{
 				setUpTimelineList();
 			}
 			}catch(Exception e){
-				Log.e("test", "onActivityResult ERROR:" + e);
+				Log.e("test", "TimelineActivity : onActivityResult ERROR:" + e);
 			}
 		
 	}

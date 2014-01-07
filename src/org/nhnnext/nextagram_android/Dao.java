@@ -27,7 +27,7 @@ public class Dao {
 					+ "ImgName text not null);";
 			db.execSQL(sql);
 		} catch (Exception e) {
-			Log.i("test", "create table err - " + e.getMessage());
+			Log.i("test", "Class Dao : create table err - " + e.getMessage());
 		}
 	}
 
@@ -42,11 +42,16 @@ public class Dao {
 			jArr = new JSONArray(jsonData);
 			if (getLength() != 0) {
 				JSONObject jObj = jArr.getJSONObject(jArr.length() - 1);
+				/*
 				int id = jObj.getInt("ID");
 				owner = jObj.getString("Owner");
 				contents = jObj.getString("Contents");
 				imgName = jObj.getString("ImgName");
-
+*/
+				int id = jObj.getInt("id");
+				owner = jObj.getString("owner");
+				contents = jObj.getString("contents");
+				imgName = jObj.getString("fileName");
 				String sql = "INSERT INTO UserContent"
 						+ " VALUES("
 						+ id
@@ -60,23 +65,22 @@ public class Dao {
 					db.execSQL(sql);
 					
 				} catch (Exception e) {
-					Log.i("test", "SQL INSERT ERROR ! " + e);
+					Log.i("test", "Class Dao - SQL INSERT ERROR ! " + e);
 				}
 				try {
-					fileDownloader.downFile(
-							"http://10.73.44.93/~stu06/image/" + imgName,
-							imgName);
-
+//					fileDownloader.downFile("http://10.73.44.93/~stu06/image/" + imgName, imgName);
+					fileDownloader.downFile("http://10.73.43.110:8080/images/" + imgName, imgName);
+					
 				} catch (Exception e) {
 					Log.i("test", "file downloader.downfile err! " + e);
 				}
 			} else {
 				for (int i = 0; i < jArr.length(); i++) {
 					JSONObject jObj = jArr.getJSONObject(i);
-					int id = jObj.getInt("ID");
-					owner = jObj.getString("Owner");
-					contents = jObj.getString("Contents");
-					imgName = jObj.getString("ImgName");
+					int id = jObj.getInt("id");
+					owner = jObj.getString("owner");
+					contents = jObj.getString("contents");
+					imgName = jObj.getString("fileName");
 
 					String sql = "INSERT INTO UserContent"
 							+ " VALUES("
@@ -90,13 +94,11 @@ public class Dao {
 					try {
 						db.execSQL(sql);
 					} catch (Exception e) {
-						Log.i("test", "SQL INSERT ERROR ! " + e);
+						Log.i("test", "Class Dao - SQL INSERT ERROR ! " + e);
 					}
 					try {
-						fileDownloader.downFile(
-								"http://10.73.44.93/~stu06/image/" + imgName,
-								imgName);
-
+//						fileDownloader.downFile("http://10.73.44.93/~stu06/image/" + imgName,imgName);
+						fileDownloader.downFile("http://10.73.43.110:8080/images/" + imgName, imgName);
 					} catch (Exception e) {
 						Log.i("test", "file downloader.downfile err! " + e);
 					}
@@ -104,7 +106,7 @@ public class Dao {
 				}
 			}
 		} catch (JSONException e) {
-			Log.i("test", "JSON ERROR - " + e.getMessage());
+			Log.i("test", "Class Dao - JSON ERROR - " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -126,7 +128,7 @@ public class Dao {
 				imgName = cursor.getString(3);
 				dataList.add(new ListData(id, owner, contents, imgName));
 			} catch (Exception e) {
-				Log.i("test", "getdatalist err - " + e.getMessage());
+				Log.i("test", "Class Dao - getdatalist err - " + e.getMessage());
 			}
 		}
 		cursor.close();
@@ -143,6 +145,7 @@ public class Dao {
 
 			return cursor.getInt(0);
 		} catch (Exception e) {
+			Log.i("test", "Class Dao : getLength() err -  " + e.getMessage());
 			return 0;
 		}
 	}
@@ -163,13 +166,13 @@ public class Dao {
 					return dataList.get(cnt);
 				}
 			} catch (Exception e) {				
-				Log.i("test", "getdatabyid err - " + e.getMessage());
+				Log.i("test", "Class Dao : getdatabyid err - " + e.getMessage());
 			}
 			cnt++;
 		}
 		cursor.close();
 
-		Log.i("test", "getdatabyid err : not have contents");
+		Log.i("test", "Class Dao - getdatabyid err : not have contents");
 		return null;
 	}
 	

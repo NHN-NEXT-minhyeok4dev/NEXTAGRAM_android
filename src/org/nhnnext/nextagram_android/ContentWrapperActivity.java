@@ -28,8 +28,6 @@ public class ContentWrapperActivity extends Activity {
 		ListData tlData = dao.getDataByID(Integer.parseInt(contentNumber));
 		contentImage = (ImageView)findViewById(R.id.imageView_upload);
 		detailText = (TextView)findViewById(R.id.detail_text);
-				
-		
 		
 		setTitle(tlData.getContents());
 		detailText.setText("\nID : " + tlData.getId() +

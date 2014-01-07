@@ -57,7 +57,7 @@ public class UploadActivity extends Activity implements OnClickListener{
 			image.setImageBitmap(bitmap);
 		}
 		}catch(Exception e){
-			Log.e("test", "onActivityResult ERROR:" + e);
+			Log.e("test", "UploadActivity : onActivityResult ERROR:" + e);
 		}
 	}
 	

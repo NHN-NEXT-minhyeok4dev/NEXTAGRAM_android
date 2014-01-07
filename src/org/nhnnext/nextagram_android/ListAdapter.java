@@ -42,18 +42,7 @@ public class ListAdapter extends ArrayAdapter<ListData>{
 		TextView content = (TextView)row.findViewById(R.id.tvContent);
 		
 		content.setText(listData.get(position).getContents());
-		
-		
-		// asset에 있는 사진 불러오기
-//		InputStream is;
-//		try {
-//			is = context.getAssets().open(listData.get(position).getImgName());
-//			Drawable d = Drawable.createFromStream(is, null);
-//			img.setImageDrawable(d);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		
+
 		String img_path = context.getFilesDir().getPath() + "/" + listData.get(position).getImgName();
 		File img_load_path = new File(img_path);
 		if(img_load_path.exists()){

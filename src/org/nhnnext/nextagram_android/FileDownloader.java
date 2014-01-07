@@ -22,7 +22,7 @@ public class FileDownloader {
 	
 	public void downFile(String fileUrl, String fileName){
 		File filePath = new File(context.getFilesDir().getPath() + "/" + fileName);
-		
+		System.out.println(fileUrl + " , " + filePath );
 		if(!filePath.exists()){
 			try{
 				URL url = new URL(fileUrl);
